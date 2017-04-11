@@ -13,7 +13,7 @@
 
 import * as path from 'path';
 import {Severity, SourcePosition, SourceRange, Warning} from 'polymer-analyzer';
-import {Diagnostic, DiagnosticSeverity, Position as LSPosition, Range} from 'vscode-languageserver';
+import {Diagnostic, DiagnosticSeverity, Position as LSPosition, Range as LSRange} from 'vscode-languageserver';
 import Uri from 'vscode-uri';
 
 /**
@@ -46,14 +46,14 @@ export default class AnalyzerLSPConverter {
     };
   }
 
-  convertPosition(position: LSPosition): SourcePosition {
-    return {line: position.line, column: position.character};
+  convertPosition({line, character: column}: LSPosition): SourcePosition {
+    return {line, column};
   }
 
-  convertRange(range: SourceRange): Range {
+  convertRange({start, end}: SourceRange): LSRange {
     return {
-      start: {line: range.start.line, character: range.start.column},
-      end: {line: range.end.line, character: range.end.column}
+      start: {line: start.line, character: start.column},
+      end: {line: end.line, character: end.column}
     };
   }
 

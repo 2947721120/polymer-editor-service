@@ -87,7 +87,7 @@ export default class LanguageServer extends AutoDisposable {
       connection.onInitialize((params): InitializeResult => {
         // Normalize across the two ways that the workspace may be
         // communicated to us.
-        let workspaceUri = getWorkspaceUri(params.rootUri, params.rootPath);
+        const workspaceUri = getWorkspaceUri(params.rootUri, params.rootPath);
         if (!workspaceUri || workspaceUri.scheme !== 'file') {
           reject(
               `Got invalid workspaceUri from client: ` +

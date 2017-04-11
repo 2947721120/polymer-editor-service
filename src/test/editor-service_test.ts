@@ -17,7 +17,7 @@ import {assert} from 'chai';
 import * as fs from 'fs';
 import * as path from 'path';
 import {Analyzer, FSUrlLoader, PackageUrlResolver, Severity, SourceRange, Warning, WarningPrinter} from 'polymer-analyzer';
-import {CodeUnderliner, invertPromise} from 'polymer-analyzer/lib/test/test-utils';
+import {CodeUnderliner} from 'polymer-analyzer/lib/test/test-utils';
 
 import {AttributesCompletion, EditorService, ElementCompletion} from '../editor-service';
 import {LocalEditorService} from '../local-editor-service';
@@ -575,9 +575,9 @@ function editorTests(editorFactory: (basedir: string) => EditorService) {
       const goodContents =
           fs.readFileSync(path.join(basedir, indexFile), 'utf-8');
       // Load a file with a syntax error
-      await invertPromise(editorService.fileChanged(
+      await editorService.fileChanged(
           path.join(basedir, 'syntax-error.js'),
-          'var var var var var var var var “hello”'));
+          'var var var var var var var var “hello”');
 
       await editorService.fileChanged(indexFile, `${goodContents}
           <script src="./syntax-error.js"></script>`);
